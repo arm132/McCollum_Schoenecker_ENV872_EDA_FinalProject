@@ -10,3 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 hello this is a test
+
+
+```{r}
+library(auk)
+
+```
+Comparing diversity of bird populations in the triangle, maybe look at that over time, land cover dataset, overlay that to see how populations have changed in comparison to development. 
+
+Breeding 
+June and July, pare down the data to be more manageable 
+
