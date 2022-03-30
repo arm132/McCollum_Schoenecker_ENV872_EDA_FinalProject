@@ -1,0 +1,12 @@
+---
+title: "bird project test"
+author: "Aurora"
+date: "3/30/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+hello this is a test
