@@ -40,16 +40,16 @@ You can also embed plots, for example:
 Orange_bird_2010$Date<-mdy(Orange_bird_2010$`OBSERVATION DATE`)
 
 Orange_bird_2010_wrangle<- Orange_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
+  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
 
 Wake_bird_2010$Date<-mdy(Wake_bird_2010$`OBSERVATION DATE`)
 Wake_bird_2010_wrangle<- Wake_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
+  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
 
 
 Durham_bird_2010$Date<-mdy(Durham_bird_2010$`OBSERVATION DATE`)
 Durham_bird_2010_wrangle<- Durham_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
+  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
 
 all_bird_2010<- rbind(Orange_bird_2010_wrangle, Wake_bird_2010_wrangle, Durham_bird_2010_wrangle, deparse.level = 1, make.row.names=TRUE, stringsAsFactors=FALSE, factor.exclude=TRUE)
 
@@ -57,4 +57,15 @@ unique(all_bird_2010$COUNTY)
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r practice visualization}
+
+#bird count over time, color= county 
+ggplot(EnoDischarge, aes(x = datetime, y = discharge.mean)) +
+  geom_line() +
+  labs(x = "", y = expression("Discharge (ft"^3*"/s)"))
+
+ggplot(all_bird_2010,aes(x=Date, y=`SCIENTIFIC NAME`)) +
+  geom_line()
+```
+
