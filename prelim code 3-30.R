@@ -40,5 +40,5 @@ Durham.ts <- ts(spp.counts.Durham$spp_total, start = c(2010,1), frequency = 12)
 Durham.decomp <- stl(Durham.ts, s.window = "periodic")
 plot(Durham.decomp)
 
-
+# Next step: import SGCN list, get SGCN counts for the different counties
 
