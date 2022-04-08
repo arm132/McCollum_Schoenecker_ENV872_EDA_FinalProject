@@ -19,14 +19,11 @@ Durham.1 <- Durham.1 %>%
   mutate(YEAR = year(OBSERVATION.DATE)) %>%
   mutate(MY = my(paste0(MONTH,"-",YEAR)))
 
-
 Durham.2$OBSERVATION.DATE <- as.Date(Durham.2$OBSERVATION.DATE, format = "%m/%d/%Y")
 Durham.2 <- Durham.2 %>%
   mutate(MONTH = month(OBSERVATION.DATE)) %>%
   mutate(YEAR = year(OBSERVATION.DATE)) %>%
   mutate(MY = my(paste0(MONTH,"-",YEAR)))
-
-
 
 spp.counts.1 <- Durham.1 %>%
   group_by(COUNTY, MY) %>%
