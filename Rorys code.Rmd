@@ -1,21 +1,11 @@
 ---
-title: "Final project things"
+title: "Rorys code"
 author: "Aurora"
-date: "4/7/2022"
-output: pdf_document
+date: "4/8/2022"
+output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r setup2 }
+```{r setup}
 library(tidyverse)
 library(lubridate)
 library(trend)
@@ -30,9 +20,7 @@ Wake_bird_2010 <- read_csv("~/Desktop/Wake_bird_2010.csv")
 Durham_bird_2010 <- read_csv("~/Desktop/Durham_bird_2010.csv")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
 ```{r select columns and bind}
 #columns we want: County, observer ID, Observation date, scientific name, common name, observation count 
@@ -53,25 +41,37 @@ Durham_bird_2010_wrangle<- Durham_bird_2010 %>%
 
 all_bird_2010<- rbind(Orange_bird_2010_wrangle, Wake_bird_2010_wrangle, Durham_bird_2010_wrangle, deparse.level = 1, make.row.names=TRUE, stringsAsFactors=FALSE, factor.exclude=TRUE)
 
-unique(all_bird_2010$COUNTY)
-
-```
-
-#test to upload folders
-
-```{r practice visualization}
-
-#bird count over time, color= county 
-ggplot(EnoDischarge, aes(x = datetime, y = discharge.mean)) +
-  geom_line() +
-  labs(x = "", y = expression("Discharge (ft"^3*"/s)"))
-
-ggplot(all_bird_2010,aes(x=Date, y=`SCIENTIFIC NAME`)) +
-  geom_line()
 ```
 
 
 ```{r}
-Durham.1 <- read.csv("tidy_Durham_2010-2014.csv")
+
+all_bird_2010 <- all_bird_2010 %>%
+  mutate(MONTH = month(Date)) %>%
+  mutate(YEAR = year(Date)) %>%
+  mutate(MY = my(paste0(MONTH,"-",YEAR)))
+
+exotic_counts<-all_bird_2010 %>%
+  group_by(COUNTY, YEAR) %>%
+  summarize(exotics = length(unique(`EXOTIC CODE`)))
+
+individual_id <- all_bird_2010 %>%
+  group_by(COUNTY, YEAR) %>%
+  summarize(personal_id=length(unique(`OBSERVER ID`)))
+
+```
+
+
+```{r}
+all_bird.ts <- ts(individual_id$personal_id, start = c(2010,1), frequency = 12)
+all.decomp <- stl(all_bird.ts, s.window = "periodic")
+plot(all.decomp)
+```
+
+```{r Mann Kendall}
+wind_data_trend1 <- Kendall::SeasonalMannKendall(wind_data_ts)
+
+all_bird_trend<-Kendall::SeasonalMannKendall(all_bird.ts)
+
 ```
 
