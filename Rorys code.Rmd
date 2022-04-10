@@ -55,5 +55,23 @@ exotic_counts<-all_bird_2010 %>%
   group_by(COUNTY, YEAR) %>%
   summarize(exotics = length(unique(`EXOTIC CODE`)))
 
+individual_id <- all_bird_2010 %>%
+  group_by(COUNTY, YEAR) %>%
+  summarize(personal_id=length(unique(`OBSERVER ID`)))
+
+```
+
+
+```{r}
+all_bird.ts <- ts(individual_id$personal_id, start = c(2010,1), frequency = 12)
+all.decomp <- stl(all_bird.ts, s.window = "periodic")
+plot(all.decomp)
+```
+
+```{r Mann Kendall}
+wind_data_trend1 <- Kendall::SeasonalMannKendall(wind_data_ts)
+
+all_bird_trend<-Kendall::SeasonalMannKendall(all_bird.ts)
+
 ```
 
