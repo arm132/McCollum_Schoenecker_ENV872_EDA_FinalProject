@@ -41,4 +41,41 @@ Durham.decomp <- stl(Durham.ts, s.window = "periodic")
 plot(Durham.decomp)
 
 # Next step: import SGCN list, get SGCN counts for the different counties
+SGCN <- read.csv("xAPPENDIX-PA1-All-SGCN-by-taxonomic-group-2020-update_FINAL_v3.csv")
+SGCN_birds <- SGCN[c(56:148),c(1:4)]
+colnames(SGCN_birds) <- c("Scientific Name", "Common Name", "Order", "Family")
+write.csv(SGCN_birds, "NC_SGCN_birds.csv")
+SGCN_bird_list <- SGCN_birds$`Common Name`
 
+Durham.total <- rbind(Durham.1, Durham.2)
+Durham.total <- Durham.total %>%
+  mutate(SGCN = ifelse(COMMON.NAME %in% SGCN_bird_list, "Y", "N"))
+
+Durham.SGCN <- unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y"])
+
+Durham.SGCN.by.year <- Durham.total %>%
+  group_by(YEAR) %>%
+  summarize(SGCN_total = length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y"])))
+
+# The not as elegant way since pipe isn't working...
+Durham.SGCN.2010 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2010]))
+Durham.SGCN.2011 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2011]))
+Durham.SGCN.2012 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2012]))
+Durham.SGCN.2013 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2013]))
+Durham.SGCN.2014 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2014]))
+Durham.SGCN.2015 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2015]))
+Durham.SGCN.2016 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2016]))
+Durham.SGCN.2017 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2017]))
+Durham.SGCN.2018 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2018]))
+Durham.SGCN.2019 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2019]))
+
+Durham.SGCN.by.year <- rbind(Durham.SGCN.2010, Durham.SGCN.2011, Durham.SGCN.2012, 
+                             Durham.SGCN.2013, Durham.SGCN.2014, Durham.SGCN.2015,
+                             Durham.SGCN.2016, Durham.SGCN.2017, Durham.SGCN.2018,
+                             Durham.SGCN.2019)
+Durham.SGCN.by.year <- as.data.frame(Durham.SGCN.by.year) 
+
+Durham.SGCN.by.year <- Durham.SGCN.by.year %>%
+  mutate(YEAR = c(2010:2019))
+
+ggplot(Durham.SGCN.by.year) + geom_point(aes(x = YEAR, y = V1))
