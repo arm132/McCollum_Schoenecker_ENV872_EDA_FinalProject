@@ -8,8 +8,8 @@ mytheme <- theme_classic(base_size = 14) +
 theme_set(mytheme)
 
 # Reading in and wrangling data
-Durham.1 <- read.csv("./Data/Raw/tidy_Durham_2010-2014.csv")
-Durham.2 <- read.csv("./Data/Raw/tidy_Durham_2015-2019.csv")
+Durham.1 <- read.csv("./Data/Processed/tidy_Durham_2010-2014.csv")
+Durham.2 <- read.csv("./Data/Processed/tidy_Durham_2015-2019.csv")
 
 Durham.1$OBSERVATION.DATE <- as.Date(Durham.1$OBSERVATION.DATE, format = "%m/%d/%Y")
 Durham.1 <- Durham.1 %>%
