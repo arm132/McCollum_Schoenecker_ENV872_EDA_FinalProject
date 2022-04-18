@@ -35,19 +35,26 @@ test.thing <- Durham.total %>%
 
 Durham.SGCN.by.year <- Durham.total %>%
   group_by(YEAR) %>%
-  summarize(SGCN_total = length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y"])))
+  summarize(SGCN_total = n_distinct(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y"]))
 
 # The not as elegant way since pipe isn't working...
-Durham.SGCN.2010 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2010]))
-Durham.SGCN.2011 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2011]))
-Durham.SGCN.2012 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2012]))
-Durham.SGCN.2013 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2013]))
-Durham.SGCN.2014 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2014]))
-Durham.SGCN.2015 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2015]))
-Durham.SGCN.2016 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2016]))
-Durham.SGCN.2017 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2017]))
-Durham.SGCN.2018 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2018]))
-Durham.SGCN.2019 <- length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2019]))
+test.counts <- #for loop :)
+
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2010]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2011]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2012]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2013]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2014]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2015]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2016]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2017]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2018]))
+length(unique(Durham.total$COMMON.NAME[Durham.total$SGCN == "Y" & Durham.total$YEAR == 2019]))
+
+Du.SGCN.counts <- c(34, 50, 40, 35, 36, 43, 35, 40, 43, 47)
+Du.SGCN.years <- c(2010:2019)
+Du.SGCN.by.year <- cbind(Du.SGCN.years, Du.SGCN.counts)
+colnames(Du.SGCN.by.year) <- c("Year", "SGCN_total")
 
 Durham.SGCN.by.year <- rbind(Durham.SGCN.2010, Durham.SGCN.2011, Durham.SGCN.2012, 
                              Durham.SGCN.2013, Durham.SGCN.2014, Durham.SGCN.2015,
