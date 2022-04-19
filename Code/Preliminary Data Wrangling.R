@@ -30,8 +30,16 @@ Wake.2 <- read.csv("./Data/Raw/eBird_Wake_2015-2019.csv")
 
 Wake.1 <- Wake.1 %>%
   select(COMMON.NAME, OBSERVATION.COUNT, COUNTY, LOCALITY:SAMPLING.EVENT.IDENTIFIER)
-Wake.2 <- Wake.2 %>%
-  select(COMMON.NAME, OBSERVATION.COUNT, COUNTY, LOCALITY:SAMPLING.EVENT.IDENTIFIER)
-
 # write.csv(Wake.1, "./Data/Processed/tidy_Wake_2010-2014.csv")
-# write.csv(Wake.2, "./Data/Processed/tidy_Wake_2015-2019.csv")
+
+  # Dividing second half of Wake data into 2 csv's in order to push them to GitHub
+Wake.2$OBSERVATION.DATE <- as.Date(Wake.2$OBSERVATION.DATE, format = "%m/%d/%Y")
+Wake.2.1 <- Wake.2 %>%
+  select(COMMON.NAME, OBSERVATION.COUNT, COUNTY, LOCALITY:SAMPLING.EVENT.IDENTIFIER) %>%
+  filter(OBSERVATION.DATE < "2018-01-01")
+Wake2.2 <- Wake.2 %>%
+  select(COMMON.NAME, OBSERVATION.COUNT, COUNTY, LOCALITY:SAMPLING.EVENT.IDENTIFIER) %>%
+  filter(OBSERVATION.DATE >= "2018-01-01")
+
+# write.csv(Wake.2.1, "./Data/Processed/tidy_Wake_2015-2017.csv")
+# write.csv(Wake.2.2, "./Data/Processed/tidy_Wake_2018-2019.csv")
