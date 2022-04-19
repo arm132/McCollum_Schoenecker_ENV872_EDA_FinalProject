@@ -1,7 +1,7 @@
 # Setting up library, ggplot theme
 library(tidyverse); library(lubridate)
 
-mytheme <- theme_classic(base_size = 14) +
+mytheme <- theme_bw(base_size = 14) +
   theme(axis.text = element_text(color = "black"), 
         legend.position = "right")
 theme_set(mytheme)
