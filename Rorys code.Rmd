@@ -25,22 +25,86 @@ Durham_bird_2010 <- read_csv("~/Desktop/Durham_bird_2010.csv")
 ```{r select columns and bind}
 #columns we want: County, observer ID, Observation date, scientific name, common name, observation count 
 
+Orange_bird_2010<- Orange_bird_2010 %>%
+  select(`COMMON NAME`, `OBSERVATION COUNT`, `COUNTY`, `LOCALITY`:`SAMPLING EVENT IDENTIFIER`)
+
+#write.csv(Orange_bird_2010, "tidy_Orange_2010-2020")
+
+Wake_bird_2010<- Wake_bird_2010 %>%
+  select(`COMMON NAME`, `OBSERVATION COUNT`, `COUNTY`, `LOCALITY`:`SAMPLING EVENT IDENTIFIER`)
+
+#write.csv(Wake_bird_2010, "tidy_Wake_2010-2020")
+
+```
+
+
+
+```{r}
 Orange_bird_2010$Date<-mdy(Orange_bird_2010$`OBSERVATION DATE`)
 
 Orange_bird_2010_wrangle<- Orange_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
+  select(`COMMON NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
 
 Wake_bird_2010$Date<-mdy(Wake_bird_2010$`OBSERVATION DATE`)
 Wake_bird_2010_wrangle<- Wake_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
+  select(`COMMON NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
 
 
 Durham_bird_2010$Date<-mdy(Durham_bird_2010$`OBSERVATION DATE`)
 Durham_bird_2010_wrangle<- Durham_bird_2010 %>%
-  select(`COMMON NAME`, `SCIENTIFIC NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`, `EXOTIC CODE`)
+  select(`COMMON NAME`, `OBSERVATION COUNT`, `Date`, `OBSERVER ID`, `COUNTY`)
 
 all_bird_2010<- rbind(Orange_bird_2010_wrangle, Wake_bird_2010_wrangle, Durham_bird_2010_wrangle, deparse.level = 1, make.row.names=TRUE, stringsAsFactors=FALSE, factor.exclude=TRUE)
+```
 
+
+
+```{r Durham.ts}
+durham_2010 <- Durham_bird_2010 %>%
+  mutate(MONTH = month(Date)) %>%
+  mutate(YEAR = year(Date)) %>%
+  mutate(MY = my(paste0(MONTH,"-",YEAR)))
+
+individual_id_durham <- durham_2010 %>%
+  group_by(COUNTY, MY) %>%
+  summarize(personal_id=length(unique(`OBSERVER ID`)))
+
+durham.ts <- ts(individual_id_durham$personal_id, start = c(2010,1), end = c(2020,1), frequency = 12)
+durham.decomp <- stl(durham.ts, s.window = "periodic")
+plot(durham.decomp)
+
+```
+
+
+```{r Orange.ts}
+orange_2010 <- Orange_bird_2010 %>%
+  mutate(MONTH = month(Date)) %>%
+  mutate(YEAR = year(Date)) %>%
+  mutate(MY = my(paste0(MONTH,"-",YEAR)))
+
+individual_id_orange <- orange_2010 %>%
+  group_by(COUNTY, MY) %>%
+  summarize(personal_id=length(unique(`OBSERVER ID`)))
+
+orange.ts <- ts(individual_id_orange$personal_id, start = c(2010,1), end = c(2020,1), frequency = 12)
+orange.decomp <- stl(orange.ts, s.window = "periodic")
+plot(orange.decomp)
+```
+
+
+```{r Wake.ts}
+wake_2010 <- Wake_bird_2010 %>%
+  mutate(MONTH = month(Date)) %>%
+  mutate(YEAR = year(Date)) %>%
+  mutate(MY = my(paste0(MONTH,"-",YEAR)))
+
+individual_id_wake <- wake_2010 %>%
+  group_by(COUNTY, MY) %>%
+  summarize(personal_id=length(unique(`OBSERVER ID`)))
+
+wake.ts <- ts(individual_id_wake$personal_id, start = c(2010,1), end = c(2019,9), frequency = 12)
+wake.decomp <- stl(wake.ts, s.window = "periodic")
+plot(wake.decomp)
 ```
 
 
@@ -51,27 +115,29 @@ all_bird_2010 <- all_bird_2010 %>%
   mutate(YEAR = year(Date)) %>%
   mutate(MY = my(paste0(MONTH,"-",YEAR)))
 
-exotic_counts<-all_bird_2010 %>%
-  group_by(COUNTY, YEAR) %>%
-  summarize(exotics = length(unique(`EXOTIC CODE`)))
+unique(all_bird_2010$`COMMON NAME`)
 
 individual_id <- all_bird_2010 %>%
-  group_by(COUNTY, YEAR) %>%
+  group_by(COUNTY, MY) %>%
   summarize(personal_id=length(unique(`OBSERVER ID`)))
 
 ```
 
 
+
 ```{r}
-all_bird.ts <- ts(individual_id$personal_id, start = c(2010,1), frequency = 12)
+all_bird.ts <- ts(individual_id$personal_id, start = c(2010,1), end = c(2020,1), frequency = 12)
 all.decomp <- stl(all_bird.ts, s.window = "periodic")
 plot(all.decomp)
 ```
 
 ```{r Mann Kendall}
-wind_data_trend1 <- Kendall::SeasonalMannKendall(wind_data_ts)
 
 all_bird_trend<-Kendall::SeasonalMannKendall(all_bird.ts)
+all_bird_trend
+summary(all_bird_trend)
 
+all_bird_trend2<- trend::smk.test(all_bird.ts)
+all_bird_trend2
+summary(all_bird_trend2)
 ```
-
