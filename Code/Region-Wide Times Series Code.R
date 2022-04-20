@@ -48,14 +48,6 @@ Total.spp.trend <- Kendall::SeasonalMannKendall(Total.ts)
 Total.spp.trend
 summary(Total.spp.trend)
 
-Total_spp_plot <-
-  ggplot(spp.counts.total, aes(x = MY, y = spp_total)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Month/Year", y = "# of Species Observed") +
-  geom_smooth(method = lm)
-print(Total_spp_plot)
-
 # Unique sampling events by month
 Total.event.ts <- ts(total.event.counts$total_events, start = c(2010,1), frequency = 12)
 Total.event.decomp <- stl(Total.event.ts, s.window = "periodic")
