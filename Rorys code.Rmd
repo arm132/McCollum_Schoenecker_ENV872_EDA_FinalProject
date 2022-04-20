@@ -22,7 +22,7 @@ Durham_bird_2010 <- read_csv("~/Desktop/Durham_bird_2010.csv")
 
 
 
-```{r select columns and bind}
+```{r select columns}
 #columns we want: County, observer ID, Observation date, scientific name, common name, observation count 
 
 Orange_bird_2010<- Orange_bird_2010 %>%
@@ -39,7 +39,7 @@ Wake_bird_2010<- Wake_bird_2010 %>%
 
 
 
-```{r}
+```{r mdy and bind}
 Orange_bird_2010$Date<-mdy(Orange_bird_2010$`OBSERVATION DATE`)
 
 Orange_bird_2010_wrangle<- Orange_bird_2010 %>%
@@ -115,7 +115,7 @@ all_bird_2010 <- all_bird_2010 %>%
   mutate(YEAR = year(Date)) %>%
   mutate(MY = my(paste0(MONTH,"-",YEAR)))
 
-unique(all_bird_2010$`COMMON NAME`)
+#unique(all_bird_2010$`COMMON NAME`)
 
 individual_id <- all_bird_2010 %>%
   group_by(COUNTY, MY) %>%
