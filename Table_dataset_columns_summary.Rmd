@@ -1,0 +1,20 @@
+---
+title: "Table of dataset columns and summary"
+author: "Aurora"
+date: "4/20/2022"
+output: html_document
+---
+
+
+
+**Dataset title** | **Summary**
+------------- | -------------
+ECOTOX | data from U.S. EPA ECOTOX Knowledgebase website
+------------------- | ---------------------------
+EPAair | data from U.S. EPA air quality monitoring of PM2.5 and ozone in North Carolina in 2017 and 2018
+------------------- | ---------------------------
+NEON_NIWO_Litter | litterfall and woody debris data (needles, leaves, twigs, lichen, etc)
+------------------- | ---------------------------
+NTL-LTR_Lake_Nutrients | nutrient data from studies on several lakes in the North Temperate Lakes District in Wisconsin, USA. Data were collected as part of the Long Term Ecological Research station established by the National Science Foundation.
+------------------- | ---------------------------
+USGS_Site02085000_Flow | U.S. geological survey streamflow data from the gage site 02085000 (Eno River at Hillsborough, NC) 

@@ -55,25 +55,25 @@ We used descriptive names, but did not follow one specific naming convention. Fo
 
 In the code folder you will find the following files
 
-Durham Event Count Time Series: 
+**Data wrangling_time series_Mann kendall:** uploading data and wrangling, along with time series for unique birder ID's and the related mann kendall. 
 
-Geospatial EDA Code:
+**Durham Event Count Time Series:** code for unique sampling events by month and total species count and their corresponding time series analyses. 
 
-prelim code 3-30:
+**Geospatial EDA Code:** creating shape files for each county and creating maps that showed the amount of unique common names by latitude and longitude.  
 
-Preliminary Data Wrangling:
+**prelim code 3-30:** used when we were having problems with our github and wanted to share the code we were working on
 
-Region-Wide Times Series Code:
+**Preliminary Data Wrangling:** This code is what we did to make the giant datasets downloaded small enough to push to github, before we did out other wrangling to make them look better. 
 
-SGCN Analysis code:
+**Region-Wide Times Series Code:** Time series analysis done on all three counties together (instead of by county like in prelim code)
 
-Data wrangling_time series_Mann kendall: 
-
+**SGCN Analysis code:** Wrangling and analyzing Species of Greatest Conservation Need data, combining with each counties dataset.
 
 
 ## Quality assurance/quality control
 
-We did not feel there were any 
+We did not feel there were any relevant quality assurance or quality control methods we could use with the data we had. As a citizen science dataset we recognize there is some uncertainty. This is something we took into consideration when making conclusions. 
+
 <describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:>
 <https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan>
 <https://www.dataone.org/best-practices/ensure-basic-quality-control>
