@@ -52,13 +52,16 @@ We used descriptive names, but did not follow one specific naming convention. Fo
 ## Scripts and code
 
 <list any software scripts/code contained in the repository and a description of their purpose.>
+In the code folder you will find the following 
+Durham Event Count Time Series
 
+Final doc
 
 
 
 ## Quality assurance/quality control
 
-
+We did not feel there were any 
 <describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:>
 <https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan>
 <https://www.dataone.org/best-practices/ensure-basic-quality-control>

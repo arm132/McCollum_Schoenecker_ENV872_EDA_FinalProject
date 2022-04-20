@@ -1,5 +1,5 @@
 ---
-title: "Rorys code"
+title: "Data wrangling, time series, Mann Kendall"
 author: "Aurora"
 date: "4/8/2022"
 output: html_document
