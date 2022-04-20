@@ -21,7 +21,7 @@ mainfont: Times New Roman
 \listoffigures 
 \newpage
 
-```{r setup, include=FALSE}
+```{r setup, include=T, eval=T, echo=F}
 # Set your working directory
 setwd("~/MEM Courses/Sem2/ENV 872/McCollum_Schoenecker_ENV872_EDA_FinalProject")
 getwd()
@@ -68,7 +68,7 @@ The Research Triangle region of central North Carolina is made up of some of the
 # Dataset Information
 eBird is an open-source citizen science website created by the Cornell University Lab of Ornithology which allows the public to upload their own bird observation data collected from around the world (eBird 2022). The site has become incredibly popular with both amateur birders and scientific researchers since its creation. We downloaded bird observation data from the site for Durham, Orange, and Wake counties collected between January 2010 and December 2019. The data includes many variables including the common and scientific names of each bird species and observation data, time, and geographic coordinates. However, several variables in the dataset were not of use to us, so we selected 12 variables from the original set to create new, tidy datasets for each county (Table 1). This wrangling was performed with v. 4.1 of the R programming language (R Core Team 2021) as well as the tidyverse package (Wickham et al 2019).  
 
-```{r Prelim Wrangling, eval=F, echo=F}
+```{r Prelim Wrangling, eval=FALSE, include=FALSE}
 # Wranging eBird Durham County raw data
 Durham.1 <- read.csv("./Data/Raw/eBird_Durham_2010-2014.csv")
 Durham.2 <- read.csv("./Data/Raw/eBird_Durham_2015-2019.csv")
@@ -253,7 +253,7 @@ ggplot(event.counts) + geom_point(aes(x = MY, y = value, col = County)) +
   labs(x = "Month", y = "# of USEs", col = "County") # Figure 2
 ```
 
-In order to perform our analysis related to species of concern in the Research Triangle, we also used a dataset provided by the North Carolina Wildlife Resources Commission (NCWRC) detailing Species of Greatest Conservation Need (SGCN) in the state (NCWRC 2020). SGCN are determined by the NCWRC based on any policies concerning threatened or endangered species, risks related to the type of habitat they use, as well as other indicators of concern. The raw data included information on all SGCN identified in North Carolina, but through wrangling we filtered in order to create a vector that only included SGCN that were birds (Table 2). By cross-referencing this vector with the eBird data, we were able to calculate how many SGCN were observed in each county during each year of the decade.  
+In order to perform our analysis related to species of concern in the Research Triangle, we also used a dataset provided by the North Carolina Wildlife Resources Commission (NCWRC) detailing Species of Greatest Conservation Need (SGCN) in the state (NCWRC 2020). SGCN are determined by the NCWRC based on any policies concerning threatened or endangered species, risks related to the type of habitat they use, as well as other indicators of concern. The raw data included information on all SGCN identified in North Carolina, but through wrangling we filtered in order to create a vector that only included SGCN that were birds. By cross-referencing this vector with the eBird data, we were able to calculate how many SGCN were observed in each county during each year of the decade.  
 
 ```{r SGCN wrangling, eval=T, echo=F}
 SGCN_birds <- SGCN[c(56:148),c(1:4)]
