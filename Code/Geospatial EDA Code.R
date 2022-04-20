@@ -39,6 +39,7 @@ rm(Durham.1, Durham.2, Durham.total, Orange.1, Orange.2, Orange.total, Wake.1, W
 counties_sf<- st_read('./Data/Raw/cb_2018_us_county_20m.shp') %>% 
   filter(NAME == "Durham"|NAME == "Orange"|NAME == "Wake") %>%
   filter(STATEFP == 37)
+counties_sf <- st_transform(counties_sf, crs = 4326)
 
 ggplot() + geom_sf(data = counties_sf, aes(fill = NAME)) + 
   geom_sf(data = Durham.sf, size = 0.5) + 
