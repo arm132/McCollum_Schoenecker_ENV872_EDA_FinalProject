@@ -19,14 +19,6 @@ Durham.spp.trend <- Kendall::SeasonalMannKendall(Durham.ts)
 Durham.spp.trend
 summary(Durham.spp.trend)
 
-Durham_spp_plot <-
-  ggplot(spp.counts.Durham, aes(x = MY, y = spp_total)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Month/Year", y = "# of Species Observed") +
-  geom_smooth(method = lm)
-print(Durham_spp_plot)
-
   # Unique sampling events by month
 Durham.event.ts <- ts(event.counts.Durham$event_total, start = c(2010,1), frequency = 12)
 Durham.event.decomp <- stl(Durham.event.ts, s.window = "periodic")
@@ -45,14 +37,6 @@ plot(Orange.decomp)
 Orange.spp.trend <- Kendall::SeasonalMannKendall(Orange.ts) 
 Orange.spp.trend
 summary(Orange.spp.trend)
-
-Orange_spp_plot <-
-  ggplot(spp.counts.Orange, aes(x = MY, y = spp_total)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Month/Year", y = "# of Species Observed") +
-  geom_smooth(method = lm)
-print(Orange_spp_plot)
 
   # Unique sampling events by month
 Orange.event.ts <- ts(event.counts.Orange$event_total, start = c(2010,1), frequency = 12)
@@ -73,14 +57,6 @@ Wake.spp.trend <- Kendall::SeasonalMannKendall(Wake.ts)
 Wake.spp.trend
 summary(Wake.spp.trend)
 
-Wake_spp_plot <-
-  ggplot(spp.counts.Wake, aes(x = MY, y = spp_total)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Month/Year", y = "# of Species Observed") +
-  geom_smooth(method = lm)
-print(Wake_spp_plot)
-
 # Unique sampling events by month
 Wake.event.ts <- ts(event.counts.Wake$event_total, start = c(2010,1), frequency = 12)
 Wake.event.decomp <- stl(Wake.event.ts, s.window = "periodic")
@@ -89,6 +65,4 @@ plot(Wake.event.decomp)
 Wake.event.trend <- Kendall::SeasonalMannKendall(Wake.event.ts) 
 Wake.event.trend
 summary(Wake.event.trend)
-
-
 
