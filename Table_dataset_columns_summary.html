@@ -171,6 +171,32 @@ pre code {
 </div>
 
 
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(lubridate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<pre class="r"><code>library(knitr)
+
+quick&lt;-read.csv(&quot;/Users/rorymccollum/Desktop/Rdata/McCollum_Schoenecker_ENV872_EDA_FinalProject/Data/Processed/tidy_Durham_2010-2014.csv&quot;, stringsAsFactors = TRUE)
+colnames(quick)</code></pre>
+<pre><code>##  [1] &quot;X&quot;                         &quot;COMMON.NAME&quot;              
+##  [3] &quot;OBSERVATION.COUNT&quot;         &quot;COUNTY&quot;                   
+##  [5] &quot;LOCALITY&quot;                  &quot;LOCALITY.ID&quot;              
+##  [7] &quot;LOCALITY.TYPE&quot;             &quot;LATITUDE&quot;                 
+##  [9] &quot;LONGITUDE&quot;                 &quot;OBSERVATION.DATE&quot;         
+## [11] &quot;TIME.OBSERVATIONS.STARTED&quot; &quot;OBSERVER.ID&quot;              
+## [13] &quot;SAMPLING.EVENT.IDENTIFIER&quot;</code></pre>
 <table>
 <colgroup>
 <col width="50%" />
@@ -178,46 +204,78 @@ pre code {
 </colgroup>
 <thead>
 <tr class="header">
-<th><strong>Dataset title</strong></th>
+<th><strong>Column Name</strong></th>
 <th><strong>Summary</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ECOTOX</td>
-<td>data from U.S. EPA ECOTOX Knowledgebase website</td>
+<td>X</td>
+<td>Row number</td>
 </tr>
 <tr class="even">
 <td>——————-</td>
 <td>—————————</td>
 </tr>
 <tr class="odd">
-<td>EPAair</td>
-<td>data from U.S. EPA air quality monitoring of PM2.5 and ozone in North Carolina in 2017 and 2018</td>
+<td>COMMON.NAME</td>
+<td>Primary English common name of the bird identified.</td>
 </tr>
 <tr class="even">
 <td>——————-</td>
 <td>—————————</td>
 </tr>
 <tr class="odd">
-<td>NEON_NIWO_Litter</td>
-<td>litterfall and woody debris data (needles, leaves, twigs, lichen, etc)</td>
+<td>OBSERVATION.COUNT</td>
+<td>The number of individuals at the time of observation. An ‘X’ is used when no count was made, to indicate presence.</td>
 </tr>
 <tr class="even">
 <td>——————-</td>
 <td>—————————</td>
 </tr>
 <tr class="odd">
-<td>NTL-LTR_Lake_Nutrients</td>
-<td>nutrient data from studies on several lakes in the North Temperate Lakes District in Wisconsin, USA. Data were collected as part of the Long Term Ecological Research station established by the National Science Foundation.</td>
+<td>COUNTY</td>
+<td>What county the observation was made in (Durham, Orange, or Wake).</td>
 </tr>
 <tr class="even">
 <td>——————-</td>
 <td>—————————</td>
 </tr>
 <tr class="odd">
-<td>USGS_Site02085000_Flow</td>
-<td>U.S. geological survey streamflow data from the gage site 02085000 (Eno River at Hillsborough, NC)</td>
+<td>LOCALITY</td>
+<td>The location name for the observation. These can be chosen from a list or the observer can name the location.</td>
+</tr>
+<tr class="even">
+<td>LOCALITY.ID</td>
+<td>Unique alphanumeric code for a location.</td>
+</tr>
+<tr class="odd">
+<td>LOCALITY.TYPE</td>
+<td>Since location names can be confusing, this code defines the type of location: plot specific locations on a map (P), choose existing locations from a map (H), or choose to submit data for a town (T), postal code (PC), county (C), or state (S). Abbreviations: State (S), County (C), Postal/Zip Code (PC), Town (T), Hotspot (H), Personal (P).</td>
+</tr>
+<tr class="even">
+<td>LATITUDE</td>
+<td>Latitude of the observation in decimal degrees.</td>
+</tr>
+<tr class="odd">
+<td>LONGITUDE</td>
+<td>Longitude of the observation in decimal degrees.</td>
+</tr>
+<tr class="even">
+<td>OBSERVATION.DATE</td>
+<td>Date of observation</td>
+</tr>
+<tr class="odd">
+<td>TIME.OBSERVATIONS.STARTED</td>
+<td>What time did the observer start their sampling event (24 hour time)</td>
+</tr>
+<tr class="even">
+<td>OBSERVER.ID</td>
+<td>The unique identification number given to a citizen observer.</td>
+</tr>
+<tr class="odd">
+<td>SAMPLING.EVENT.IDENTIFIER</td>
+<td>The unique number associated with the sampling event; a combination of location, date, observer, and start time.</td>
 </tr>
 </tbody>
 </table>
