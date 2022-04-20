@@ -69,6 +69,8 @@ In the code folder you will find the following files
 
 **SGCN Analysis code:** Wrangling and analyzing Species of Greatest Conservation Need data, combining with each counties dataset.
 
+**Summary Table** 
+
 
 ## Quality assurance/quality control
 
