@@ -52,10 +52,22 @@ We used descriptive names, but did not follow one specific naming convention. Fo
 ## Scripts and code
 
 <list any software scripts/code contained in the repository and a description of their purpose.>
-In the code folder you will find the following 
-Durham Event Count Time Series
 
-Final doc
+In the code folder you will find the following files
+
+Durham Event Count Time Series: 
+
+Geospatial EDA Code:
+
+prelim code 3-30:
+
+Preliminary Data Wrangling:
+
+Region-Wide Times Series Code:
+
+SGCN Analysis code:
+
+Data wrangling_time series_Mann kendall: 
 
 
 
