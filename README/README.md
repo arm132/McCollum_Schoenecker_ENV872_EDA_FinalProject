@@ -38,7 +38,7 @@ All the data included in this project came from the eBird website (eBird 2022). 
 
 <describe the folders contained in the repository, including what type of files they contain>
 
-There is a "Code" folder, which contains preliminary data wrangling, our basic analyses, and some test markdowns. The "Data" folder contains two subfolders, "Processed" and "Raw". The Raw folder has the data as it was downloaded from eBird, some of the data has been zipped due to the large size. The Processed folder has the tidy data after we removed unnecessary columns. Our final folder is the "Output" folder, which contains our plots and time series decompositions. 
+There is a "Code" folder, which contains preliminary data wrangling, our basic analyses, and some test markdowns. The "Data" folder contains two subfolders, "Processed" and "Raw". The Raw folder has the data as it was downloaded from eBird, some of the data has been zipped due to the large size. The Processed folder has the tidy data after we removed unnecessary columns. The "Output" folder contains our plots and time series decompositions. Finally, the "README" folder contains this file! 
 
 <describe the formats of files for the various purposes contained in the repository>
 
@@ -48,15 +48,15 @@ Code files are rmarkdowns, Data files are mostly in .csv or .zip format, and Out
 
 We used descriptive names, but did not follow one specific naming convention. The for data and output the title includes the county when relevant and some other descriptor reminding us what the output will be (related to analyses). 
 
-## Metadata
-
-<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
 
 ## Scripts and code
 
 <list any software scripts/code contained in the repository and a description of their purpose.>
 
+
+
 ## Quality assurance/quality control
+
 
 <describe any relevant QA/QC procedures taken with your data. Some ideas can be found here:>
 <https://www.dataone.org/best-practices/develop-quality-assurance-and-quality-control-plan>
