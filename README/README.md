@@ -19,9 +19,9 @@ This repository holds all the information for our final Environmental Data Analy
 ## Investigators
 <name(s), affiliation(s), contact information, roles (if applicable)>
 
-Aurora McCollum, Master of Environmental Management candidate, Coastal Environmental Management, aurora.mccollum@duke.edu 
+Aurora McCollum, Master of Environmental Management candidate, Coastal Environmental Management, <aurora.mccollum@duke.edu>
 
-Rachel Schoenecker, Master of Environmental Management candidtate, Ecosystem Science and Conservation, rachel.schoenecker@duke.edu
+Rachel Schoenecker, Master of Environmental Management candidtate, Ecosystem Science and Conservation, <rachel.schoenecker@duke.edu>
 
 ## Keywords
 <add relevant keywords here>
@@ -46,12 +46,13 @@ Code files are rmarkdowns, Data files are mostly in .csv or .zip format, and Out
 
 <describe your file naming conventions>
 
-We used descriptive names, but did not follow one specific naming convention. The for data and output the title includes the county when relevant and some other descriptor reminding us what the output will be (related to analyses). 
+We used descriptive names, but did not follow one specific naming convention. For the data and output the title includes the county when relevant and some other descriptor reminding us what the output will be (related to analyses). 
 
 
 ## Scripts and code
 
 <list any software scripts/code contained in the repository and a description of their purpose.>
+
 
 
 
