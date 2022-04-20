@@ -5,8 +5,8 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
+title: "Avian Diversity in the Reseach Triangle"
+subtitle: "https://github.com/arm132/McCollum_Schoenecker_ENV872_EDA_FinalProject"
 author: "Rachel Schoenecker and Aurora McCollum"
 fontsize: 12pt
 mainfont: Times New Roman
