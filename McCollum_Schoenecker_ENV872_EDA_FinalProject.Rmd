@@ -17,11 +17,13 @@ mainfont: Times New Roman
 \tableofcontents 
 \newpage
 \listoftables 
-\newpage
 \listoffigures 
 \newpage
 
-```{r setup, include=T, eval=T, echo=F}
+```{r setup, include=F, echo=F, error=F, message=F, warning=F}
+# Setting r chunk global settings 
+knitr::opts_chunk$set(include=F, eval=F, echo=F, error=F, message=F, warning=F)
+
 # Set your working directory
 setwd("~/MEM Courses/Sem2/ENV 872/McCollum_Schoenecker_ENV872_EDA_FinalProject")
 getwd()
@@ -68,7 +70,37 @@ The Research Triangle region of central North Carolina is made up of some of the
 # Dataset Information
 eBird is an open-source citizen science website created by the Cornell University Lab of Ornithology which allows the public to upload their own bird observation data collected from around the world (eBird 2022). The site has become incredibly popular with both amateur birders and scientific researchers since its creation. We downloaded bird observation data from the site for Durham, Orange, and Wake counties collected between January 2010 and December 2019. The data includes many variables including the common and scientific names of each bird species and observation data, time, and geographic coordinates. However, several variables in the dataset were not of use to us, so we selected 12 variables from the original set to create new, tidy datasets for each county (Table 1). This wrangling was performed with v. 4.1 of the R programming language (R Core Team 2021) as well as the tidyverse package (Wickham et al 2019).  
 
-```{r Prelim Wrangling, eval=FALSE, include=FALSE}
+**Column Name** | **Summary**
+------------- | -------------
+X | Row number 
+------------------- | ---------------------------
+COMMON.NAME | Primary English common name of the bird identified. 
+------------------- | ---------------------------
+OBSERVATION.COUNT | The number of individuals at the time of observation. An 'X' is used when no count was made, to indicate presence. 
+------------------- | ---------------------------
+COUNTY | What county the observation was made in (Durham, Orange, or Wake). 
+------------------- | ---------------------------
+LOCALITY | The location name for the observation. These can be chosen from a list or the observer can name the location. 
+------------- | -------------
+LOCALITY.ID | Unique alphanumeric code for a location.
+------------- | -------------
+LOCALITY.TYPE | Code defining the type of location: plot specific locations on a map (P), choose existing locations from a map (H), or choose to submit data for a town (T), postal code (PC), county (C), or state (S).
+------------- | -------------
+LATITUDE |  Latitude of the observation in decimal degrees.
+------------- | -------------
+LONGITUDE | Longitude of the observation in decimal degrees.
+------------- | -------------
+OBSERVATION.DATE | Date of observation
+------------- | -------------
+TIME.OBSERVATIONS.STARTED | What time did the observer start their sampling event (24 hour time)
+------------- | -------------
+OBSERVER.ID | The unique identification number given to a citizen observer. 
+------------- | -------------
+SAMPLING.EVENT.IDENTIFIER | The unique number associated with the sampling event; a combination of location, date, observer, and start time. 
+
+Table: Descriptions of the 12 variables selected for analysis within the eBird datasets.
+
+```{r Prelim Wrangling, eval=F}
 # Wranging eBird Durham County raw data
 Durham.1 <- read.csv("./Data/Raw/eBird_Durham_2010-2014.csv")
 Durham.2 <- read.csv("./Data/Raw/eBird_Durham_2015-2019.csv")
@@ -116,7 +148,7 @@ Wake2.2 <- Wake.2 %>%
 
 Using the tidy data, we created tables for each county summarizing the number of unique species observed, or species richness, within each month of the decade. We used this metric as the indicator for bird diversity. We also created summary tables that showed the total number of unique sampling events uploaded for each month of the decade for each county. We used this metric as the indicator for the popularity of eBird.   
 
-```{r SPP and Event Wrangling, eval=T, echo=F}
+```{r SPP and Event Wrangling}
 # DURHAM
 Durham.1$OBSERVATION.DATE <- as.Date(Durham.1$OBSERVATION.DATE, format = "%m/%d/%Y")
 Durham.1 <- Durham.1 %>%
@@ -268,9 +300,13 @@ SGCN_bird_list <- SGCN_birds$Common.Name
 # Exploratory Analysis 
 For our first step in analyzing our data, we created simple plots of species richness (Figure 1) and unique sampling events (Figure 2) across the decade to see if any clear trends could be identified. While all three counties exhibited possible positive trends in species richness, these were not entirely clear and required further analysis. There was a stronger positive trend in unique sample events that was visible for all three counties, but we also wanted to analyze this trend more precisely.  
 
-![Figure 1. Scatterplot showing species richness of each county for each month of the 10-year time period.](./Output/EDA_SppRichness_Plot.png)
-![Figure 2. Scatterplot showing number of unique sampling events (USEs) in each county for each month of the 10-year time period.](./Output/EDA_EventCount_Plot.png)
-Since the eBird data included latitude and longitude for every observation, the other component of our exploratory analysis included visualizing the location of each observation geospatially (Figure 3). This plot shows that the distribution of sampling locations was not evenly distributed across the region and that observations were concentrated around the urban centers of each county (Durham, Chapel Hill, and Raleigh).  
+
+![Scatterplot showing species richness of each county for each month of the 10-year time period.](./Output/EDA_SppRichness_Plot.png)
+
+
+![Scatterplot showing number of unique sampling events (USEs) in each county for each month of the 10-year time period.](./Output/EDA_EventCount_Plot.png)
+
+Since the eBird data included latitude and longitude for every observation, the other component of our exploratory analysis included visualizing the location of each observation geospatially (Figure 3). We completed this geospatial analysis in R using the sf package (Pebesma 2018). This plot shows that the distribution of sampling locations was not evenly distributed across the region and that observations were concentrated around the urban centers of each county (Durham, Chapel Hill, and Raleigh).  
 
 ```{r Geospatial EDA}
 Durham.total <- rbind(Durham.1, Durham.2)
@@ -300,14 +336,16 @@ ggplot() + geom_sf(data = counties_sf, aes(fill = NAME)) +
   geom_sf(data = Wake.sf, size = 0.5) + labs(fill = "County")
 ```
 
-![Figure 3. Map of Durham, Orange, and Wake counties with points symbolizing each sampling location in the eBird dataset.](./Output/EDA_geospatial_plot.png)
+![Map of Durham, Orange, and Wake counties with points symbolizing each sampling location in the eBird dataset.](./Output/EDA_geospatial_plot.png)
+
 \newpage
 
 # Analysis
 
 ## Question 1: How did the diversity of the Research Triangle’s bird population change during the 2010s? 
 
-A time series analysis of species richness across all three counties combined showed both a seasonal trend as well as a strong positive monotonic trend (Figure 4). The seasonal trend likely correlates with the spring and fall migration seasons when more species would be present in the area. A seasonal Mann-Kendall test supported our identification of a significant positive trend in species richness across the time period (score = 195, tau = 0.366, p < 0.001).   
+A time series analysis of species richness across all three counties combined showed both a seasonal trend as well as a strong positive monotonic trend (Figure 4). The seasonal trend likely correlates with the spring and fall migration seasons when more species would be present in the area. A seasonal Mann-Kendall test supported our identification of a significant positive trend in species richness across the time period (score = 195, tau = 0.366, p < 0.001).  
+In order to complete this and all subsequent time series analysis in R, we utilized the zoo (Zeilies and Grothendeick 2005) and tseries (Trapletti and Hornik 2021) packages to construct the time series objects and the trend (Pohlert 2020) and Kendall (McLeod 2011) packages to perform the seasonal Mann-Kendall tests.    
 
 ```{r RT SPP TS}
 total.1 <- rbind(Durham.1, Orange.1, Wake.1)
@@ -329,11 +367,14 @@ Total.spp.trend
 summary(Total.spp.trend)
 ```
 
-![Figure 4. Time series decomposition for species richness aggregated across all three counties from 2010 to 2019.](./Output/RT_spp_ts_decomp.png)
+![Time series decomposition for species richness aggregated across all three counties from 2010 to 2019.](./Output/RT_spp_ts_decomp.png)
+
+\clearpage
+
 
 ## Question 1a: Is this trend consistent across all three main counties in the region (Durham, Orange, and Wake)? 
 
-Individual time series analysis for each county also exhibited seasonality as well as positive monotonic trends (Figures 5a-c). The pattern and rate of this positive trend was slightly different among the counties, however. While species richness saw a steeper increase earlier in the decade in Wake County, there was a more gradual increase throughout the period in Orange County, and Durham County saw a steeper increase in more recent years. Seasonal Mann-Kendall tests produced significant results for Durham (score = 172, tau = 0.322, p < 0.001), Orange (score = 381, tau = 0.710, p < 0.001), and Wake counties (score = 345, tau = 0.650, p < 0.001).
+Individual time series analysis for each county also exhibited seasonality as well as positive monotonic trends (Figures 5-7). The pattern and rate of this positive trend was slightly different among the counties, however. While species richness saw a steeper increase earlier in the decade in Wake County, there was a more gradual increase throughout the period in Orange County, and Durham County saw a steeper increase in more recent years. Seasonal Mann-Kendall tests produced significant results for Durham (score = 172, tau = 0.322, p < 0.001), Orange (score = 381, tau = 0.710, p < 0.001), and Wake counties (score = 345, tau = 0.650, p < 0.001).
 
 ```{r county SPP TS}
 # DURHAM
@@ -364,13 +405,17 @@ Wake.spp.trend
 summary(Wake.spp.trend)
 ```
 
-![Figure 5a. Time series decomposition for species richness in Durham County from 2010 to 2019.](./Output/Durham_spp_ts_decomp.png)
-![Figure 5b. Time series decomposition for species richness in Orange County from 2010 to 2019.](./Output/Orange_spp_ts_decomp.png)
-![Figure 5c. Time series decomposition for species richness in Wake County from 2010 to 2019.](./Output/Wake_spp_ts_decomp.png)
+![Time series decomposition for species richness in Durham County from 2010 to 2019.](./Output/Durham_spp_ts_decomp.png)
+
+![Time series decomposition for species richness in Orange County from 2010 to 2019.](./Output/Orange_spp_ts_decomp.png)
+
+![Time series decomposition for species richness in Wake County from 2010 to 2019.](./Output/Wake_spp_ts_decomp.png)
+
+\clearpage
 
 ## Question 1b: Was there a clear trend in the presence of species of concern across the decade? 
 
-For each of the three counties, the number of SGCN observed in the final year of the period (2019) was noticeably higher than the number observed in the first year of the period (2010; Figure 6). However, none of the counties exhibited a constant increase in SGCN count across the entire decade, suggesting that further analysis is necessary to fully understand the trend in these data.
+For each of the three counties, the number of SGCN observed in the final year of the period (2019) was noticeably higher than the number observed in the first year of the period (2010; Figure 8). However, none of the counties exhibited a constant increase in SGCN count across the entire decade, suggesting that further analysis is necessary to fully understand the trend in these data.
 
 ```{r SGCN code}
 Durham.total <- Durham.total %>%
@@ -461,11 +506,12 @@ ggplot(SGCN.total) + geom_point(aes(x = Year, y = value, col = County)) +
   ylab("# of SGCN")
 ```
 
-![Figure 6. Number of SGCN observed in each county for each year of the study period.](./Output/SGCN_plot.png)
+![Number of SGCN observed in each county for each year of the study period.](./Output/SGCN_plot.png)
+
 
 ## Question 2: How did the popularity of eBird change in the Research Triangle across the 2010s? 
 
-A time series analysis of unique sampling events across all three counties combined showed both a seasonal trend as well as a strong positive monotonic trend (Figure 7). The seasonal trend in this time series is likely related to a higher frequency in birding activity during the spring migration and summer breeding season when weather conditions are pleasant. Our visual assessment of the decomposition was supported by a seasonal Mann-Kendall test that showed a significant positive trend in species richness across the period (score = 520, tau = 0.963, p < 0.001). This trend was also consistent within each county (Figures 8a-c). Additionally, seasonal Mann-Kendall tests showed that this monotonic trend was significant for Durham (score = 283, tau = 0.525, p < 0.001), Orange (score = 495, tau = 0.918, p < 0.001), and Wake counties (score = 514, tau = 0.952, p < 0.001).  
+A time series analysis of unique sampling events across all three counties combined showed both a seasonal trend as well as a strong positive monotonic trend (Figure). The seasonal trend in this time series is likely related to a higher frequency in birding activity during the spring migration and summer breeding season when weather conditions are pleasant. Our visual assessment of the decomposition was supported by a seasonal Mann-Kendall test that showed a significant positive trend in species richness across the period (score = 520, tau = 0.963, p < 0.001). This trend was also consistent within each county (Figures 10-12). Additionally, seasonal Mann-Kendall tests showed that this monotonic trend was significant for Durham (score = 283, tau = 0.525, p < 0.001), Orange (score = 495, tau = 0.918, p < 0.001), and Wake counties (score = 514, tau = 0.952, p < 0.001).  
 
 ```{r Event TS Code}
 total.event.counts <- read.csv("./Data/Processed/Total_EventCounts.csv")
@@ -510,13 +556,14 @@ Wake.event.trend
 summary(Wake.event.trend)
 ```
 
-![Figure 7. Time series decomposition for event count aggregated across all three counties from 2010 to 2019.](./Output/RT_event_ts_decomp.png)
+![Time series decomposition for event count aggregated across all three counties from 2010 to 2019.](./Output/RT_event_ts_decomp.png)
 
-![Figure 8a. Time series decomposition for event count in Durham County from 2010 to 2019.](./Output/Durham_event_ts_decomp.png)
-![Figure 8b. Time series decomposition for event count in Orange County from 2010 to 2019.](./Output/Orange_event_ts_decomp.png)
-![Figure 8c. Time series decomposition for event count in Wake County from 2010 to 2019.](./Output/Wake_event_ts_decomp.png)
+![Time series decomposition for event count in Durham County from 2010 to 2019.](./Output/Durham_event_ts_decomp.png)
 
-In order to complete these time series analyses in R, we utilized the zoo (Zeilies and Grothendeick 2005) and tseries (Trapletti and Hornik 2021) packages to construct the time series objects and the trend (Pohlert 2020) and Kendall (McLeod 2011) packages to perform the seasonal Mann-Kendall tests.    
+![Time series decomposition for event count in Orange County from 2010 to 2019.](./Output/Orange_event_ts_decomp.png)
+
+![Time series decomposition for event count in Wake County from 2010 to 2019.](./Output/Wake_event_ts_decomp.png)
+
 
 \newpage
 
@@ -542,9 +589,12 @@ Minor, E, Urban, D. 2010. Forest bird communities across a gradient of urban dev
 
 North Carolina Wildlife Resources Commission. 2020. Addendum 1 to the Wildlife Action Plan. Raleigh, NC. https://www.ncwildlife.org/plan   
 
+Pebesma, E. 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
+
 Pohlert, T. 2020. trend: Non-Parametric Trend Tests and Change-Point Detection. R package version 1.1.4. https://CRAN.R-project.org/package=trend   
 
-R Core Team. 2021. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/ 
+R Core Team. 2021. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/
+
 
 Rosenberg, KV, Dokter, AM, Blancher, PJ, Sauer JR, Smith, AC, Smith, PA, Stanton, JC, Panjabi, A, Helft, L, Parr, M, and Marra, PP. 2019. Decline of the North American avifauna, Science. 366, 120-124. https://doi.org/10.1126/science.aaw1313  
 
