@@ -34,7 +34,7 @@ LOCALITY | The location name for the observation. These can be chosen from a lis
 ------------- | -------------
 LOCALITY.ID | Unique alphanumeric code for a location.
 ------------- | -------------
-LOCALITY.TYPE | Since location names can be confusing, this code defines the type of location: plot specific locations on a map (P), choose existing locations from a map (H), or choose to submit data for a town (T), postal code (PC), county (C), or state (S). Abbreviations: State (S), County (C), Postal/Zip Code (PC), Town (T), Hotspot (H), Personal (P).
+LOCALITY.TYPE | Code defining the type of location: plot specific locations on a map (P), choose existing locations from a map (H), or choose to submit data for a town (T), postal code (PC), county (C), or state (S).
 ------------- | -------------
 LATITUDE |  Latitude of the observation in decimal degrees.
 ------------- | -------------
@@ -48,6 +48,6 @@ OBSERVER.ID | The unique identification number given to a citizen observer.
 ------------- | -------------
 SAMPLING.EVENT.IDENTIFIER | The unique number associated with the sampling event; a combination of location, date, observer, and start time. 
 
-
+Table: Descriptions of the 12 variables selected for analysis within the eBird datasets.
 
 
