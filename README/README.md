@@ -69,7 +69,7 @@ In the code folder you will find the following files
 
 **SGCN Analysis code:** Wrangling and analyzing Species of Greatest Conservation Need data, combining with each counties dataset.
 
-**Summary Table** 
+**Summary Table:** Table including descriptions of the 12 variables selected for analysis within the eBird datasets.
 
 
 ## Quality assurance/quality control
